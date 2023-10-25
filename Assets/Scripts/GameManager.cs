@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 {
     public override void OnLeftRoom()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Lobby");
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
