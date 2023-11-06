@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using TMPro;
@@ -15,6 +16,8 @@ public class LobbyManager : MonoBehaviour
 
     private bool isJoinSelected = true;
 
+    [SerializeField] private GameObject loadingText;
+
     [SerializeField] private GameObject joinButton;
     [SerializeField] private GameObject createButton;
 
@@ -24,10 +27,27 @@ public class LobbyManager : MonoBehaviour
     [SerializeField] private GameObject roomsScrollPanelContainer;
     [SerializeField] private Button scrollPanelItemPrefab;
 
+    [SerializeField] private GameObject youContainer;
+    [SerializeField] private TextMeshProUGUI youName;
+
+    [SerializeField] private GameObject otherPlayerContainer;
+    [SerializeField] private TextMeshProUGUI otherPlayerName;
+
+    [SerializeField] private GameObject startGameButton;
+
     [SerializeField] private Server server;
 
     private void Start()
     {
+        loadingText.SetActive(true);
+        gameObject.SetActive(false);
+    }
+
+    public void OnConnected()
+    {
+        loadingText.SetActive(false);
+        gameObject.SetActive(true);
+
         LoadAvailableRooms();
 
         StartCoroutine(CheckNewRooms());
@@ -73,17 +93,47 @@ public class LobbyManager : MonoBehaviour
 
         joinPanel.SetActive(false);
         createPanel.SetActive(true);
+
+        var players = server.GetPlayersInCurrentRoom();
+
+        if (players.Count > 0)
+        {
+            youContainer.SetActive(true);
+            youName.text = players[0].NickName;
+        }
+        else
+        {
+            youName.text = "";
+        }
+
+        if (players.Count > 1)
+        {
+            otherPlayerContainer.SetActive(true);
+            otherPlayerName.text = players[1].NickName;
+        }
+        else
+        {
+            otherPlayerName.text = "";
+        }
+
+        startGameButton.SetActive(false);
+
+        isJoinSelected = false;
     }
 
     public void OnJoinSelect()
     {
         if (isJoinSelected) { return; }
 
+        server.LeaveRoom();
+
         Select(joinButton);
         Unselect(createButton);
 
         joinPanel.SetActive(true);
         createPanel.SetActive(false);
+
+        startGameButton.SetActive(false);
 
         LoadAvailableRooms();
 
@@ -94,11 +144,19 @@ public class LobbyManager : MonoBehaviour
     {
         if (!isJoinSelected) { return; }
 
+        server.CreateRoom();
+
         Unselect(joinButton);
         Select(createButton);
 
         joinPanel.SetActive(false);
         createPanel.SetActive(true);
+
+        youContainer.SetActive(true);
+        youName.text = PhotonNetwork.NickName;
+        otherPlayerContainer.SetActive(false);
+
+        startGameButton.SetActive(true);
 
         isJoinSelected = false;
     }
@@ -113,5 +171,22 @@ public class LobbyManager : MonoBehaviour
     {
         component.GetComponent<Image>().color = unselectedBackgroundColor;
         component.GetComponentInChildren<TextMeshProUGUI>().color = unselectedTextColor;
+    }
+
+    public void OnPlayerJoined(string playerName)
+    {
+        otherPlayerContainer.SetActive(true);
+        otherPlayerName.text = playerName;
+    }
+
+    public void OnPlayerLeft(bool isMasterClient)
+    {
+        otherPlayerContainer.SetActive(false);
+        startGameButton.SetActive(true);
+    }
+
+    public void StartGame()
+    {
+        server.Play();
     }
 }

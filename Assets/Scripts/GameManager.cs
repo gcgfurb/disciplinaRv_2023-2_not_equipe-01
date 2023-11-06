@@ -3,12 +3,8 @@ using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviourPunCallbacks//, IPunObservable
+public class GameManager : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private GameObject ball;
-
-    private GameObject networkBall;
-
     public override void OnLeftRoom()
     {
         SceneManager.LoadScene("Menu");
@@ -44,25 +40,4 @@ public class GameManager : MonoBehaviourPunCallbacks//, IPunObservable
         Debug.Log($"Loading level for {PhotonNetwork.CurrentRoom.PlayerCount} players");
         PhotonNetwork.LoadLevel("Game");
     }
-
-    //private void Update()
-    //{
-    //    if (!PhotonNetwork.IsMasterClient)
-    //    {
-    //        ball.transform.position = Vector3.Lerp(transform.position, networkBall.transform.position, Time.deltaTime * 10f);
-    //    }
-    //}
-
-    //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    //{
-    //    if (stream.IsWriting)
-    //    {
-    //        stream.SendNext(ball);
-    //    }
-    //    else
-    //    {
-    //        networkBall = (GameObject)stream.ReceiveNext();
-    //    }
-    //}
-
 }

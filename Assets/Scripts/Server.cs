@@ -1,6 +1,7 @@
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ public class Server : MonoBehaviourPunCallbacks
     private GameObject progressLabel;
     [SerializeField]
     private TextMeshProUGUI lobbyCode;
+
+    [SerializeField] private LobbyManager lobbyManager;
 
     private readonly string gameVersion = "1";
 
@@ -38,6 +41,8 @@ public class Server : MonoBehaviourPunCallbacks
         Debug.Log("Connected to master");
 
         PhotonNetwork.JoinLobby(TypedLobby.Default);
+
+        lobbyManager.OnConnected();
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -93,6 +98,18 @@ public class Server : MonoBehaviourPunCallbacks
         Debug.Log($"Room count: {cachedRoomList.Count}");
     }
 
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Debug.Log(newPlayer);
+        Debug.Log(newPlayer.NickName);
+        lobbyManager.OnPlayerJoined(newPlayer.NickName);
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        lobbyManager.OnPlayerLeft(otherPlayer.IsMasterClient);
+    }
+
     public void Play()
     {
         Debug.Log("Loading game");
@@ -139,5 +156,15 @@ public class Server : MonoBehaviourPunCallbacks
     private void SetLobbyCode(string lobbyId)
     {
         lobbyCode.text = $"Lobby code: {lobbyId}";
+    }
+
+    public List<Player> GetPlayersInCurrentRoom()
+    {
+        if (PhotonNetwork.CurrentRoom == null)
+        {
+            return new List<Player>();
+        }
+
+        return PhotonNetwork.CurrentRoom.Players.Select(p => p.Value).ToList();
     }
 }
