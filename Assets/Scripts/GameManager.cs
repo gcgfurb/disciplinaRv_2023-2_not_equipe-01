@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public float serveUpwardForce = 3f;
-    public float hittingForce = 1f;
 
     [SerializeField] private GameObject racket;
     [SerializeField] private GameObject mockRacket;
@@ -62,6 +61,7 @@ public class GameManager : MonoBehaviour
 
     private void HandleServe()
     {
+        var ballRb = ball.GetComponent<Rigidbody>();
         ball.transform.position = mockBall.transform.position;
 
         if (serving.IsPressed())
@@ -69,8 +69,9 @@ public class GameManager : MonoBehaviour
             isServing = false;
 
             ball.transform.rotation = Quaternion.identity;
+            ballRb.velocity = Vector3.zero;
+            ballRb.angularVelocity = Vector3.zero;
 
-            var ballRb = ball.GetComponent<Rigidbody>();
             ballRb.AddForce(Vector3.up * serveUpwardForce, ForceMode.Impulse);
         }
     }

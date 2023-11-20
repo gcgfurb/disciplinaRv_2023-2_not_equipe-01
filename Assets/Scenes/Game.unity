@@ -1229,7 +1229,7 @@ GameObject:
   - component: {fileID: 863758257}
   - component: {fileID: 863758256}
   - component: {fileID: 863758255}
-  - component: {fileID: 863758254}
+  - component: {fileID: 863758258}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Ball
@@ -1252,22 +1252,6 @@ Transform:
   m_Father: {fileID: 324480328}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &863758254
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 863758252}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 1
 --- !u!135 &863758255
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1275,11 +1259,11 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 863758252}
-  m_Material: {fileID: 13400000, guid: 0b1fa8b4c200e4f4da1c5d4e4fa26688, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.6
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &863758256
 MeshRenderer:
@@ -1331,6 +1315,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 863758252}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &863758258
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863758252}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 2
 --- !u!1001 &945631406
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1653,7 +1653,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1446280137}
   - component: {fileID: 1446280141}
-  - component: {fileID: 1446280139}
+  - component: {fileID: 1446280142}
   - component: {fileID: 1446280140}
   m_Layer: 0
   m_Name: Racket
@@ -1679,22 +1679,6 @@ Transform:
   m_Father: {fileID: 324480328}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &1446280139
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1446280136}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.5
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 2
 --- !u!114 &1446280140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1707,7 +1691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b402221c00daba409f0ee354aa35a71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitForce: 2
+  hitForce: 6
   ball: {fileID: 863758252}
 --- !u!65 &1446280141
 BoxCollider:
@@ -1720,8 +1704,24 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.3063531, y: 0.017636416, z: 0.52721876}
-  m_Center: {x: 0.0004299333, y: 0.000024115436, z: -0.10853313}
+  m_Size: {x: 0.3063531, y: 0.040230338, z: 0.52721876}
+  m_Center: {x: 0.0004299333, y: -0.0042876764, z: -0.10853313}
+--- !u!54 &1446280142
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446280136}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &1587923539
 GameObject:
   m_ObjectHideFlags: 0
@@ -2410,7 +2410,7 @@ PrefabInstance:
     - target: {fileID: 4838451146649753824, guid: 33a40f9edebd883499caca7379895360,
         type: 3}
       propertyPath: serveUpwardForce
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4838451146649753824, guid: 33a40f9edebd883499caca7379895360,
         type: 3}
