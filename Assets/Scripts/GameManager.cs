@@ -1,43 +1,92 @@
 using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviourPunCallbacks
+public class GameManager : MonoBehaviour
 {
-    public override void OnLeftRoom()
+    public float serveUpwardForce = 3f;
+    public float hittingForce = 1f;
+
+    [SerializeField] private GameObject racket;
+    [SerializeField] private GameObject mockRacket;
+    [SerializeField] private GameObject ball;
+    [SerializeField] private GameObject mockBall;
+
+    private bool isServing;
+    private PlayerInputActions playerActions;
+    private InputAction serving;
+    private InputAction restart;
+
+    private void Awake()
     {
-        SceneManager.LoadScene("Menu");
+        playerActions = new PlayerInputActions();
     }
 
-    public override void OnPlayerEnteredRoom(Player newPlayer)
+    private void OnEnable()
     {
-        Debug.Log($"Player {newPlayer.NickName} entered the room");
+        serving = playerActions.Actions.Serving;
+        restart = playerActions.Actions.Reset;
+        playerActions.Enable();
+    }
 
-        if (PhotonNetwork.IsMasterClient)
+    private void OnDisable()
+    {
+        playerActions.Disable();
+    }
+
+    private void Start()
+    {
+        Reset();
+    }
+
+    private void Reset()
+    {
+        isServing = true;
+    }
+
+    private void Update()
+    {
+        if (isServing)
         {
-            LoadGame();
+            HandleServe();
+        }
+
+        if (serving.IsPressed() && restart.IsPressed())
+        {
+            Reset();
+        }
+
+        MoveRacket();
+    }
+
+    private void HandleServe()
+    {
+        ball.transform.position = mockBall.transform.position;
+
+        if (serving.IsPressed())
+        {
+            isServing = false;
+
+            ball.transform.rotation = Quaternion.identity;
+
+            var ballRb = ball.GetComponent<Rigidbody>();
+            ballRb.AddForce(Vector3.up * serveUpwardForce, ForceMode.Impulse);
         }
     }
 
-    public override void OnPlayerLeftRoom(Player otherPlayer)
+    private void MoveRacket()
     {
-        Debug.Log($"Player {otherPlayer.NickName} left the room");
+        var racketRb = racket.GetComponent<Rigidbody>();
+
+        //racketRb.transform.position = mockRacket.transform.position;
+        //racketRb.transform.rotation = mockRacket.transform.rotation;
+        racketRb.transform.SetPositionAndRotation(mockRacket.transform.position, mockRacket.transform.rotation);
     }
 
     public void LeaveRoom()
     {
+        SceneManager.LoadScene("Menu");
         PhotonNetwork.LeaveRoom();
-    }
-
-    public void LoadGame()
-    {
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            Debug.LogError("Trying to laod level but is not master client");
-            return;
-        }
-        Debug.Log($"Loading level for {PhotonNetwork.CurrentRoom.PlayerCount} players");
-        PhotonNetwork.LoadLevel("Game");
     }
 }
