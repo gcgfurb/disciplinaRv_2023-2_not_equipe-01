@@ -55,8 +55,6 @@ public class GameManager : MonoBehaviour
         {
             Reset();
         }
-
-        MoveRacket();
     }
 
     private void HandleServe()
@@ -76,13 +74,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        MoveRacket();
+    }
+
     private void MoveRacket()
     {
         var racketRb = racket.GetComponent<Rigidbody>();
 
         //racketRb.transform.position = mockRacket.transform.position;
         //racketRb.transform.rotation = mockRacket.transform.rotation;
-        racketRb.transform.SetPositionAndRotation(mockRacket.transform.position, mockRacket.transform.rotation);
+        racketRb.MovePosition(mockRacket.transform.position);
+        racketRb.MoveRotation(mockRacket.transform.rotation);
     }
 
     public void LeaveRoom()

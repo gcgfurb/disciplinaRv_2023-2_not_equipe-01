@@ -30,14 +30,14 @@ public class Racket : MonoBehaviour
 
         Debug.Log("Hit ball");
 
-        var contact = collision.contacts[0];
-        var hitPoint = contact.point;
+        //var contact = collision.contacts[0];
+        //var hitPoint = contact.point;
 
-        var hitDirection = (hitPoint - transform.position).normalized;
+        //var hitDirection = (hitPoint - transform.position).normalized;
 
-        var force = hitDirection * hitForce + currentVelocity;
-        force = -contact.normal.normalized * hitForce - currentVelocity;
+        //var force = hitDirection * hitForce + currentVelocity;
+        //force = -contact.normal.normalized * hitForce - currentVelocity;
 
-        ballRb.AddForce(force, ForceMode.Impulse);
+        //ballRb.AddForce(force, ForceMode.Impulse);
     }
 }
