@@ -2,42 +2,42 @@ using UnityEngine;
 
 public class Racket : MonoBehaviour
 {
-    public float hitForce;
+    public Camera playerCamera;
+    public bool currentPlayer;
 
-    [SerializeField] private GameObject ball;
-
-    private Rigidbody racketRb;
-    private Rigidbody ballRb;
-    private Vector3 previousPosition;
-    private Vector3 currentVelocity;
+    [SerializeField] private GameObject mockRacket;
+    
+    private Rigidbody rb;
 
     private void Start()
     {
-        racketRb = GetComponent<Rigidbody>();
-        ballRb = ball.GetComponent<Rigidbody>();
-        previousPosition = transform.position;
+        rb = GetComponent<Rigidbody>();
+        currentPlayer = false;
     }
 
-    private void Update()
+    public void SetCurrentPlayer()
     {
-        currentVelocity = (transform.position - previousPosition) / Time.deltaTime;
-        previousPosition = transform.position;
+        currentPlayer = true;
+        playerCamera.gameObject.SetActive(true);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void UnsetCurrentPlayer()
     {
-        if (!collision.collider.CompareTag("Ball")) { return; }
+        currentPlayer = false;
+        playerCamera.gameObject.SetActive(false);
+    }
 
-        Debug.Log("Hit ball");
+    private void FixedUpdate()
+    {
+        if (currentPlayer)
+        {
+            MoveRacket();
+        }
+    }
 
-        //var contact = collision.contacts[0];
-        //var hitPoint = contact.point;
-
-        //var hitDirection = (hitPoint - transform.position).normalized;
-
-        //var force = hitDirection * hitForce + currentVelocity;
-        //force = -contact.normal.normalized * hitForce - currentVelocity;
-
-        //ballRb.AddForce(force, ForceMode.Impulse);
+    private void MoveRacket()
+    {
+        rb.MovePosition(mockRacket.transform.position);
+        rb.MoveRotation(mockRacket.transform.rotation);
     }
 }

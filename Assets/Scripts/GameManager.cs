@@ -1,4 +1,6 @@
 using Photon.Pun;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -7,8 +9,8 @@ public class GameManager : MonoBehaviour
 {
     public float serveUpwardForce = 3f;
 
-    [SerializeField] private GameObject racket;
-    [SerializeField] private GameObject mockRacket;
+    [SerializeField] private Racket player1;
+    [SerializeField] private Racket player2;
     [SerializeField] private GameObject ball;
     [SerializeField] private GameObject mockBall;
 
@@ -37,6 +39,17 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Reset();
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            player1.SetCurrentPlayer();
+            player2.UnsetCurrentPlayer();
+        }
+        else
+        {
+            player1.UnsetCurrentPlayer();
+            player2.SetCurrentPlayer();
+        }
     }
 
     private void Reset()
@@ -55,6 +68,8 @@ public class GameManager : MonoBehaviour
         {
             Reset();
         }
+
+        //var currentPlayer = GetCurrentPlayer();
     }
 
     private void HandleServe()
@@ -74,19 +89,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    private Racket GetCurrentPlayer()
     {
-        MoveRacket();
-    }
-
-    private void MoveRacket()
-    {
-        var racketRb = racket.GetComponent<Rigidbody>();
-
-        //racketRb.transform.position = mockRacket.transform.position;
-        //racketRb.transform.rotation = mockRacket.transform.rotation;
-        racketRb.MovePosition(mockRacket.transform.position);
-        racketRb.MoveRotation(mockRacket.transform.rotation);
+        if (player1.currentPlayer)
+        {
+            return player1;
+        }
+        return player2;
     }
 
     public void LeaveRoom()
