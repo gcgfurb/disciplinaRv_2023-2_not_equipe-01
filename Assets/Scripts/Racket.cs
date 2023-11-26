@@ -4,10 +4,17 @@ public class Racket : MonoBehaviour
 {
     public Camera playerCamera;
     public bool currentPlayer;
+    public int points = 0;
 
     [SerializeField] private GameObject mockRacket;
-    
+    [SerializeField] private GameManager manager;
+
     private Rigidbody rb;
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        manager.SetRefPlayer(this);
+    }
 
     private void Start()
     {
