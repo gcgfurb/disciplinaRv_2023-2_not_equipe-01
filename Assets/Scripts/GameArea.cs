@@ -16,6 +16,7 @@ public class GameArea : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        Debug.Log("net.cont: " + net.cont + " |areaP1.cont: "+ areaP1.cont+ " |areaP2.cont: "+ areaP2.cont);
         if (other.CompareTag("Ball") && net.cont == 1 && areaP1.cont == 1 && areaP2.cont == 1)
         {
             manager.AddPointRef();

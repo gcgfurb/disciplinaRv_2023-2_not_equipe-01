@@ -146,6 +146,8 @@ public class GameManager : MonoBehaviour
     internal void AddPointRef()
     {
         refPlayer.points += 1;
+        Debug.Log("P1 points: "+player1.points);
+        Debug.Log("P2 points: "+player2.points);
         if (refPlayer.points == maxPoints)
         {
             ResetGame();
@@ -160,6 +162,8 @@ public class GameManager : MonoBehaviour
     {
         Racket otherPlayer = GetOtherPlayer();
         otherPlayer.points += 1;
+        Debug.Log("P1 points: "+player1.points);
+        Debug.Log("P2 points: "+player2.points);
         if (otherPlayer.points == maxPoints)
         {
             ResetGame();
