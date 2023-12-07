@@ -1,26 +1,25 @@
-# Realidade Virtual Imersiva
+# Ping Pong VR 🏓👓
 
-Atividades desenvolvidas na disciplina de Computação Gráfica na FURB/DSC/BCC.  
+## Como configurar o projeto
 
-Alunos:  
+1. Configurar o MetaQuest 2 seguindo a documentação oficial - https://developer.oculus.com/documentation/native/android/mobile-device-setup/
 
-- Computação:  
-  Fernando Butzke  
-  Gabrielle Alice Adriano  
-  Guilherme Souza dos Santos  
-  Gustavo Henrique Kistner  
-  Jennyfer Araujo  
-  João Henrique Cardoso Bragantino  
-  Vinícius Manuel Martins  
+2. Baixar e iniciar o SteamVR
 
-Assunto: Uso do Oculus Quest 2 num jogo Multijogador de Tênis de Mesa.  
-Uso para Multijogador:  [Photon-Pun-2](https://assetstore.unity.com/packages/tools/network/photon-pun-2-120838)  
-Uso Asset da mesa de Tênis de Mesa: [Table Tennis Set]https://assetstore.unity.com/packages/3d/props/table-tennis-set-101437)  
+3. Clonar esse repositório: `git clone https://github.com/Vanfarock/table_tennis_vr/`
 
-## [Atividades da Unidade 1](unidade_1 "Atividades da Unidade 1")  
+4. Criar conta no Photon Network Unity (PUN) - https://www.photonengine.com/pun
 
-## [Atividades da Unidade 2](unidade_2 "Atividades da Unidade 2")  
+5. Criar uma nova aplicação na Dashboard - https://dashboard.photonengine.com/
 
-## [Atividades da Unidade 3](unidade_3 "Atividades da Unidade 3")  
+6. Adicionar o Photon Network Unity nos seus Assets da Unity (https://assetstore.unity.com/packages/tools/network/pun-2-free-119922)
 
-## [Atividades da Unidade 4](unidade_4 "Atividades da Unidade 4")  
+7. Iniciar a aplicação no Unity (vai pedir para baixar a versão 2021.3.16f)
+
+7. Baixar e importar os assets do PUN no projeto
+
+8. Adicionar o App ID da aplicação criada na Dashboard do PUN no Unity
+
+9. Na pasta `Assets`, entrar em `Scenes` e clicar duas vezes na cena Menu (provavelmente o Unity vai pedir para importar os Assets de TMP Essentials)
+
+10. Rodar o jogo 😛
